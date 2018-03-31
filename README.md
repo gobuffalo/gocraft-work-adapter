@@ -10,7 +10,7 @@ import "github.com/garyburd/redigo/redis"
 
 // ...
 
-buffalo.Automatic(buffalo.Options{
+buffalo.New(buffalo.Options{
   // ...
   Worker: gwa.New(gwa.Options{
     Pool: &redis.Pool{

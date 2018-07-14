@@ -9,9 +9,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/garyburd/redigo/redis"
 	"github.com/gobuffalo/buffalo/worker"
 	"github.com/gobuffalo/envy"
+	"github.com/gomodule/redigo/redis"
 	"github.com/markbates/going/randx"
 	"github.com/stretchr/testify/require"
 )

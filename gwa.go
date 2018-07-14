@@ -76,9 +76,17 @@ func (q *Adapter) Stop() error {
 	return nil
 }
 
-// Register bind a new job, with a name and a handler.
+// Register binds a new job, with a name and a handler.
 func (q *Adapter) Register(name string, h worker.Handler) error {
 	q.Pool.Job(name, func(job *work.Job) error {
+		return h(job.Args)
+	})
+	return nil
+}
+
+// RegisterWithOptions binds a new job, with a name, options and a handler.
+func (q *Adapter) RegisterWithOptions(name string, opts work.JobOptions, h worker.Handler) error {
+	q.Pool.JobWithOptions(name, opts, func(job *work.Job) error {
 		return h(job.Args)
 	})
 	return nil

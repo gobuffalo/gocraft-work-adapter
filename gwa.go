@@ -92,6 +92,18 @@ func (q *Adapter) RegisterWithOptions(name string, opts work.JobOptions, h worke
 	return nil
 }
 
+// RegisterPeriodic registers a job to run periodically, as defined by the given cron spec
+func (q *Adapter) RegisterPeriodic(cronSpec, name string, h worker.Handler) error {
+	q.Logger.Infof("Registering periodic job %s\n", name)
+	q.Pool.Job(name, func(job *work.Job) error {
+		return h(job.Args)
+	})
+
+	q.Pool.PeriodicallyEnqueue(cronSpec, name)
+
+	return nil
+}
+
 // Perform sends a new job to the queue, now.
 func (q Adapter) Perform(job worker.Job) error {
 	q.Logger.Infof("Enqueuing job %s\n", job)
